@@ -1,0 +1,38 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workshop.Views.InvoicesPage"
+             Title="Invoices">
+
+  <VerticalStackLayout Padding="16" Spacing="10">
+
+    <SearchBar Placeholder="Search by invoice id, order id, or customer name"
+               Text="{Binding SearchText}" />
+
+    <CollectionView ItemsSource="{Binding Items}">
+      <CollectionView.EmptyView>
+        <Label Text="No invoices yet." HorizontalOptions="Center" />
+      </CollectionView.EmptyView>
+
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <Frame Padding="12" Margin="0,6">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+              <Label Text="{Binding CustomerName}" FontAttributes="Bold" />
+              <Label Grid.Row="1" Text="{Binding InvoiceId, StringFormat='Invoice #{0}'}" />
+              <Label Grid.Row="2" Text="{Binding OrderId, StringFormat='Order #{0}'}" />
+
+              <Label Grid.Row="0" Grid.Column="1" 
+                     Text="{Binding MaterialsTotal, StringFormat='Mats: {0:F2}'}" HorizontalTextAlignment="End" />
+              <Label Grid.Row="1" Grid.Column="1" 
+                     Text="{Binding LaborTotal, StringFormat='Labor: {0:F2}'}" HorizontalTextAlignment="End" />
+              <Label Grid.Row="2" Grid.Column="1" 
+                     Text="{Binding GrandTotal, StringFormat='Total: {0:F2}'}" 
+                     FontAttributes="Bold" HorizontalTextAlignment="End" />
+            </Grid>
+          </Frame>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+
+  </VerticalStackLayout>
+</ContentPage>

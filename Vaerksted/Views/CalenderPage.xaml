@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workshop.Views.CalendarPage"
+             Title="Calendar">
+  <VerticalStackLayout Padding="16" Spacing="12">
+    <DatePicker Date="{Binding SelectedDate}" />
+
+    <CollectionView ItemsSource="{Binding Orders}">
+      <CollectionView.EmptyView>
+        <Label Text="No orders for this date." HorizontalOptions="Center" />
+      </CollectionView.EmptyView>
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <Frame Padding="12" Margin="0,4">
+            <VerticalStackLayout>
+              <Label Text="{Binding CustomerName}" FontAttributes="Bold"/>
+              <Label Text="{Binding CarMake}" />
+              <Label Text="{Binding PlateNumber}" />
+              <Label Text="{Binding DropOffDateTime, StringFormat='Time: {0:HH\\:mm}'}"/>
+              <Label Text="{Binding WorkDescription}" LineBreakMode="TailTruncation"/>
+            </VerticalStackLayout>
+          </Frame>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+  </VerticalStackLayout>
+</ContentPage>

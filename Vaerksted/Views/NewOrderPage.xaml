@@ -1,0 +1,19 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workshop.Views.NewOrderPage"
+             Title="Book New Order">
+             
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="12">
+      <Entry Placeholder="Customer Name" Text="{Binding CustomerName}" />
+      <Entry Placeholder="Customer Address" Text="{Binding CustomerAddress}" />
+      <Entry Placeholder="Car Make" Text="{Binding CarMake}" />
+      <Entry Placeholder="Car Model" Text="{Binding CarModel}" />
+      <Entry Placeholder="Plate Number" Text="{Binding PlateNumber}" />
+      <DatePicker Date="{Binding DropOffDate}" />
+      <TimePicker Time="{Binding DropOffTime}" />
+      <Editor Placeholder="Work Description" Text="{Binding WorkDescription}" AutoSize="TextChanges"/>
+      <Button Text="Save Order" Command="{Binding SaveOrderCommand}" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

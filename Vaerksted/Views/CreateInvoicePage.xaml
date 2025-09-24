@@ -1,0 +1,53 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workshop.Views.CreateInvoicePage"
+             Title="Create Invoice">
+
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="14">
+
+      <!-- Header fields -->
+      <Entry Placeholder="Order ID" Keyboard="Numeric" Text="{Binding OrderId}" />
+      <Entry Placeholder="Mechanic Name" Text="{Binding MechanicName}" />
+      <Entry Placeholder="Hours" Keyboard="Numeric" Text="{Binding Hours}" />
+      <Entry Placeholder="Hour Price" Keyboard="Numeric" Text="{Binding HourPrice}" />
+
+      <!-- Materials list -->
+      <Label Text="Materials" FontAttributes="Bold" />
+      <Button Text="Add item" Command="{Binding AddItemCommand}" />
+
+      <CollectionView ItemsSource="{Binding Items}">
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Frame Padding="12" Margin="0,6">
+              <Grid ColumnDefinitions="*,100,80,40" ColumnSpacing="8">
+                <Entry Grid.Column="0" Placeholder="Material"
+                       Text="{Binding MaterialName}" />
+                <Entry Grid.Column="1" Placeholder="Unit Price" Keyboard="Numeric"
+                       Text="{Binding UnitPrice}" />
+                <Entry Grid.Column="2" Placeholder="Qty" Keyboard="Numeric"
+                       Text="{Binding Quantity}" />
+                <Button Grid.Column="3" Text="X"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                        CommandParameter="{Binding .}" />
+              </Grid>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+
+      <!-- Totals -->
+      <Grid ColumnDefinitions="*,auto" RowDefinitions="Auto,Auto,Auto" Padding="0,10,0,0">
+        <Label Text="Materials:" />
+        <Label Grid.Column="1" Text="{Binding MaterialsSubtotal, StringFormat='{}{0:F2}'}" />
+        <Label Grid.Row="1" Text="Labor:" />
+        <Label Grid.Row="1" Grid.Column="1" Text="{Binding LaborTotal, StringFormat='{}{0:F2}'}" />
+        <Label Grid.Row="2" Text="Total:" FontAttributes="Bold" />
+        <Label Grid.Row="2" Grid.Column="1" Text="{Binding GrandTotal, StringFormat='{}{0:F2}'}"
+               FontAttributes="Bold" />
+      </Grid>
+
+      <Button Text="Save Invoice" Command="{Binding SaveInvoiceCommand}" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Windows Machine": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
+    },
+    // --- TILFØJ DENNE NYE PROFIL ---
+    "Vaerksted (Package)": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
