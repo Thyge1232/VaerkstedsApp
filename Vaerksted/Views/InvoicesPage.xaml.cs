@@ -19,4 +19,4 @@ public partial class InvoicesPage : ContentPage
         if (_vm == null) return;
         await _vm.LoadAsync();
     }
-}
+} 

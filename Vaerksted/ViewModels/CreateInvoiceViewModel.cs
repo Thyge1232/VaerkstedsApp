@@ -102,6 +102,52 @@ public partial class CreateInvoiceViewModel : ObservableObject
         await Shell.Current.GoToAsync("..");
     }
 
+    // Kode så man kan se hvilken ordre når man laver invoice
+    [ObservableProperty] private string orderDisplay = string.Empty;
+
+    public async Task EnsureDefaultOrderAsync()
+    {
+        if (OrderId != 0)
+        {
+            await RefreshOrderDisplayAsync();
+            return;
+        }
+
+        var last = await _db.Conn.Table<Order>()
+                      .OrderByDescending(o => o.Id)
+                      .FirstOrDefaultAsync();
+
+        if (last is not null)
+        {
+            OrderId = last.Id;
+            OrderDisplay = $"#{last.Id} — {last.CustomerName} ({last.DropOffDateTime:yyyy-MM-dd})";
+        }
+        else
+        {
+            OrderDisplay = "No orders available";
+        }
+    }
+
+    partial void OnOrderIdChanged(int value)
+    {
+        // fire-and-forget is fine for a quick UI update
+        _ = RefreshOrderDisplayAsync();
+    }
+
+    public async Task RefreshOrderDisplayAsync()
+    {
+        if (OrderId == 0)
+        {
+            OrderDisplay = "No order selected";
+            return;
+        }
+
+        var order = await _db.Conn.FindAsync<Order>(OrderId);
+        OrderDisplay = order is not null
+            ? $"#{order.Id} — {order.CustomerName} ({order.DropOffDateTime:yyyy-MM-dd})"
+            : $"Order #{OrderId} (not found)";
+    }
+
     // Row model
     public partial class ItemEntry : ObservableObject
     {

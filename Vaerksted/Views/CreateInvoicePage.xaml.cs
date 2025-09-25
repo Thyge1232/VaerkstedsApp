@@ -9,4 +9,10 @@ public partial class CreateInvoicePage : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is CreateInvoiceViewModel vm)
+            await vm.EnsureDefaultOrderAsync();
+    }
 }

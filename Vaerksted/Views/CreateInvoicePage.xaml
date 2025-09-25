@@ -14,6 +14,8 @@
 
       <!-- Materials list -->
       <Label Text="Materials" FontAttributes="Bold" />
+      <Label Text="Linked order:" />
+      <Label Text="{Binding OrderDisplay}" FontAttributes="Bold" /> 
       <Button Text="Add item" Command="{Binding AddItemCommand}" />
 
       <CollectionView ItemsSource="{Binding Items}">
