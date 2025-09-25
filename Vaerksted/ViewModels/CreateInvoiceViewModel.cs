@@ -21,8 +21,8 @@ public partial class CreateInvoiceViewModel : ObservableObject
     // Invoice header fields
     [ObservableProperty] private int orderId;
     [ObservableProperty] private string mechanicName = string.Empty;
-    [ObservableProperty] private double hours;
-    [ObservableProperty] private double hourPrice;
+    [ObservableProperty] private double? hours;
+    [ObservableProperty] private double? hourPrice;
 
     // Materials
     public ObservableCollection<ItemEntry> Items { get; } = new();
@@ -34,13 +34,13 @@ public partial class CreateInvoiceViewModel : ObservableObject
 
     private void RecalcTotals()
     {
-        MaterialsSubtotal = Items.Sum(i => i.UnitPrice * i.Quantity);
-        LaborTotal = Hours * HourPrice;
+        MaterialsSubtotal = Items.Sum(i => (i.UnitPrice ?? 0.0) * (i.Quantity ?? 0));
+        LaborTotal = (Hours ?? 0.0) * (HourPrice ?? 0.0);
         GrandTotal = MaterialsSubtotal + LaborTotal;
     }
 
-    partial void OnHoursChanged(double value) => RecalcTotals();
-    partial void OnHourPriceChanged(double value) => RecalcTotals();
+    partial void OnHoursChanged(double? value) => RecalcTotals();
+    partial void OnHourPriceChanged(double? value) => RecalcTotals();
 
     // Commands
     [RelayCommand]
@@ -64,29 +64,26 @@ public partial class CreateInvoiceViewModel : ObservableObject
     {
         // Basic validation
         var order = await _db.Conn.FindAsync<Order>(OrderId);
-        if (order is null)
-        {
-            return;
-        }
+        if (order is null) return;
 
         var invoice = new Invoice
         {
             OrderId = OrderId,
             MechanicName = MechanicName,
-            Hours = Hours,
-            HourPrice = HourPrice
+            Hours = Hours ?? 0.0,
+            HourPrice = HourPrice ?? 0.0
         };
 
         await _db.Conn.InsertAsync(invoice);
 
-        foreach (var it in Items)
+        foreach (var it in Items.Where(i => !string.IsNullOrWhiteSpace(i.MaterialName) || i.UnitPrice != null || i.Quantity != null))
         {
             var item = new InvoiceItem
             {
                 InvoiceId = invoice.Id,
                 MaterialName = it.MaterialName,
-                UnitPrice = it.UnitPrice,
-                Quantity = it.Quantity
+                UnitPrice = it.UnitPrice ?? 0.0,
+                Quantity = it.Quantity ?? 0
             };
             await _db.Conn.InsertAsync(item);
         }
@@ -95,6 +92,8 @@ public partial class CreateInvoiceViewModel : ObservableObject
         MechanicName = string.Empty;
         Hours = 0;
         HourPrice = 0;
+        Hours = null;
+        HourPrice = null;
         Items.Clear();
         RecalcTotals();
 
@@ -152,7 +151,7 @@ public partial class CreateInvoiceViewModel : ObservableObject
     public partial class ItemEntry : ObservableObject
     {
         [ObservableProperty] private string materialName = string.Empty; // TILF�JET standardv�rdi
-        [ObservableProperty] private double unitPrice;
-        [ObservableProperty] private int quantity;
+        [ObservableProperty] private double? unitPrice;
+        [ObservableProperty] private int? quantity;
     }
 }

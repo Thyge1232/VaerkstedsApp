@@ -41,7 +41,7 @@ public partial class InvoicesViewModel : ObservableObject
 
             await Task.WhenAll(orderTask, itemsTask);
 
-            var mats = itemsTask.Result.Sum(i => i.UnitPrice * i.Quantity);
+            var mats = itemsTask.Result.Sum(i => (i.UnitPrice ?? 0.0) * (i.Quantity ?? 0));
             var labor = inv.Hours * inv.HourPrice;
 
             return new InvoiceRow
@@ -54,6 +54,7 @@ public partial class InvoicesViewModel : ObservableObject
                 GrandTotal = mats + labor
             };
         });
+
 
         var rows = await Task.WhenAll(rowTasks);
 
