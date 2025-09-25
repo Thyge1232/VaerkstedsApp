@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Workshop"
     xmlns:views="clr-namespace:Workshop.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="Yu's Vaerksted A/S">
+    Title="Yu's Workshop A/S">
 
 
     <TabBar>
