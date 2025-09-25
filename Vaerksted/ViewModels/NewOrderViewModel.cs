@@ -42,7 +42,7 @@ public partial class NewOrderViewModel : ObservableObject
 
             await _db.Conn.InsertAsync(order);
 
-            // show confirmation and switch to calendar so user sees the new booking
+            // Vis orderbekræftigelse og naviger til kalender
             await Application.Current.MainPage.DisplayAlert("Saved", "Order saved", "OK");
             await Shell.Current.GoToAsync("//Calendar");
         }

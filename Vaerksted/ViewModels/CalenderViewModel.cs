@@ -20,7 +20,7 @@ public partial class CalendarViewModel : ObservableObject
         _db = db;
     }
 
-    // auto-trigger when date changes
+    
     partial void OnSelectedDateChanged(DateTime value)
     {
         _ = LoadForDateAsync();

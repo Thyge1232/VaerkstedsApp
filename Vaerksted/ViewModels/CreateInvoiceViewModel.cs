@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Workshop.Data;
 using Workshop.Models;
-using System.Linq; // Add this for Sum() method
-using Microsoft.Maui.Controls; // Added
+using System.Linq; 
+using Microsoft.Maui.Controls; 
 
 namespace Workshop.ViewModels;
 
@@ -88,7 +88,7 @@ public partial class CreateInvoiceViewModel : ObservableObject
             await _db.Conn.InsertAsync(item);
         }
 
-        // clear form after save
+        // clear celler efter order
         MechanicName = string.Empty;
         Hours = 0;
         HourPrice = 0;
@@ -97,7 +97,7 @@ public partial class CreateInvoiceViewModel : ObservableObject
         Items.Clear();
         RecalcTotals();
 
-        // navigate back so the invoices list/page can refresh
+        
         await Shell.Current.GoToAsync("..");
     }
 

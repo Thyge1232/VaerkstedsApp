@@ -27,7 +27,7 @@ public static class MauiProgram
         {
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "workshop.db3");
             var db = new AppDatabase(dbPath);
-            db.InitializeAsync().Wait(); // Initialize database when the app starts
+            db.InitializeAsync().Wait(); // Initialize database ved opstart
             return db;
         });
 

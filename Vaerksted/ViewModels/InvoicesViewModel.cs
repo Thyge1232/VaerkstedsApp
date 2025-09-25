@@ -15,12 +15,12 @@ public partial class InvoicesViewModel : ObservableObject
         _db = db;
     }
 
-    // Shown in the list UI
+    
     public ObservableCollection<InvoiceRow> Items { get; } = new();
 
     [ObservableProperty] private string? searchText;
 
-    // Reload when the search text changes
+    // Reload efter søgning
     partial void OnSearchTextChanged(string? value)
     {
         _ = LoadAsync();
