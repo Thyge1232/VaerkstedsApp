@@ -13,9 +13,9 @@
         <Label Text="No invoices yet." HorizontalOptions="Center" />
       </CollectionView.EmptyView>
 
-      <CollectionView.ItemTemplate>
+      <CollectionView.ItemTemplate >
         <DataTemplate>
-          <Frame Padding="12" Margin="0,6">
+          <Frame Padding="12" Margin="0,6" WidthRequest="200">
             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
               <Label Text="{Binding CustomerName}" FontAttributes="Bold" />
               <Label Grid.Row="1" Text="{Binding InvoiceId, StringFormat='Invoice #{0}'}" />

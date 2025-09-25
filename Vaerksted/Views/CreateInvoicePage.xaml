@@ -3,7 +3,7 @@
              x:Class="Workshop.Views.CreateInvoicePage"
              Title="Create Invoice">
 
-  <ScrollView>
+  <ScrollView WidthRequest="300">
     <VerticalStackLayout Padding="20" Spacing="14">
 
       <!-- Header fields -->
