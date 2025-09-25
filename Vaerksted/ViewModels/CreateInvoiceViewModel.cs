@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Workshop.Data;
 using Workshop.Models;
 using System.Linq; // Add this for Sum() method
+using Microsoft.Maui.Controls; // Added
 
 namespace Workshop.ViewModels;
 
@@ -96,6 +97,9 @@ public partial class CreateInvoiceViewModel : ObservableObject
         HourPrice = 0;
         Items.Clear();
         RecalcTotals();
+
+        // navigate back so the invoices list/page can refresh
+        await Shell.Current.GoToAsync("..");
     }
 
     // Row model

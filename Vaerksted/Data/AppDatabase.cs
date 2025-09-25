@@ -10,20 +10,20 @@ public class AppDatabase
     public AppDatabase(string dbPath)
     {
         Conn = new SQLiteAsyncConnection(dbPath);
+    }
 
-        // Initialiser tabeller asynkront
-        Task.Run(async () =>
+    public async Task InitializeAsync()
+    {
+        try
         {
-            try
-            {
-                await Conn.CreateTableAsync<Order>();
-                await Conn.CreateTableAsync<Invoice>();
-                await Conn.CreateTableAsync<InvoiceItem>();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex}");
-            }
-        });
+            await Conn.CreateTableAsync<Order>().ConfigureAwait(false);
+            await Conn.CreateTableAsync<Invoice>().ConfigureAwait(false);
+            await Conn.CreateTableAsync<InvoiceItem>().ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex}"); // Check for all of the crashes
+            throw;
+        }
     }
 }

@@ -9,12 +9,14 @@ public partial class InvoicesPage : ContentPage
     public InvoicesPage(InvoicesViewModel vm)
     {
         InitializeComponent();
-        BindingContext = _vm = vm;
+        _vm = vm;
+        BindingContext = vm;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (_vm == null) return;
         await _vm.LoadAsync();
     }
 }

@@ -9,12 +9,16 @@ public partial class CalendarPage : ContentPage
     public CalendarPage(CalendarViewModel vm)
     {
         InitializeComponent();
-        BindingContext = _vm = vm;
+        _vm = vm;
+        BindingContext = vm;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.LoadForDateAsync();
+        if (_vm != null)
+        {
+            await _vm.LoadForDateAsync();
+        }
     }
 }

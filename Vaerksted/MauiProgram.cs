@@ -26,7 +26,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<AppDatabase>(sp =>
         {
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "workshop.db3");
-            return new AppDatabase(dbPath);
+            var db = new AppDatabase(dbPath);
+            db.InitializeAsync().Wait(); // Initialize database when the app starts
+            return db;
         });
 
         // --- DI: ViewModels ---

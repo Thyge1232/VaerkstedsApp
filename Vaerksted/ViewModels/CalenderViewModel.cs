@@ -27,10 +27,13 @@ public partial class CalendarViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task LoadForDateAsync()
+    public async Task LoadForDateAsync() // Fixet for at fix crash ved opstart
     {
+        var start = SelectedDate.Date;
+        var end = start.AddDays(1);
+
         var list = await _db.Conn.Table<Order>()
-            .Where(o => o.DropOffDateTime.Date == SelectedDate.Date)
+            .Where(o => o.DropOffDateTime >= start && o.DropOffDateTime < end)
             .ToListAsync();
 
         Orders.Clear();
