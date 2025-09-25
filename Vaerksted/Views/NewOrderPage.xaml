@@ -3,7 +3,7 @@
              x:Class="Workshop.Views.NewOrderPage"
              Title="Book New Order">
              
-  <ScrollView>
+  <ScrollView WidthRequest="300">
     <VerticalStackLayout Padding="20" Spacing="12">
       <Entry Placeholder="Customer Name" Text="{Binding CustomerName}" />
       <Entry Placeholder="Customer Address" Text="{Binding CustomerAddress}" />

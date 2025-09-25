@@ -5,7 +5,7 @@
   <VerticalStackLayout Padding="16" Spacing="12">
     <DatePicker Date="{Binding SelectedDate}" />
 
-    <CollectionView ItemsSource="{Binding Orders}">
+    <CollectionView ItemsSource="{Binding Orders}" WidthRequest="300">
       <CollectionView.EmptyView>
         <Label Text="No orders for this date." HorizontalOptions="Center" />
       </CollectionView.EmptyView>
